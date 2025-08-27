@@ -1,11 +1,12 @@
 // api/contact.js
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
-module.exports = async (req, res) => {
-  if (req.method !== "POST") return res.status(405).json({ error: "Method Not Allowed" });
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method Not Allowed" });
+  }
 
   try {
-    // Vercel parses JSON automatically for Node functions
     const { name, email, phone, message } = req.body || {};
     if (!name || !email || !message) {
       return res.status(400).json({ error: "Name, email and message are required" });
@@ -14,10 +15,10 @@ module.exports = async (req, res) => {
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.gmail.com",
       port: Number(process.env.SMTP_PORT || 465),
-      secure: String(process.env.SMTP_SECURE || "true") === "true", // true for 465
+      secure: String(process.env.SMTP_SECURE || "true") === "true",
       auth: {
-        user: process.env.EMAIL_USER, // your mailbox
-        pass: process.env.EMAIL_PASS, // app password if Gmail
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
@@ -38,4 +39,4 @@ module.exports = async (req, res) => {
     console.error("CONTACT error:", err);
     return res.status(500).json({ error: "Email send failed" });
   }
-};
+}
