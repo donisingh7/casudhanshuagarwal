@@ -31,6 +31,24 @@ const TESTIMONIALS = [
     quote:
       "Straight answers, clean reporting, and measurable results—exactly what a growing business needs.",
   },
+  {
+    name: "Mr. Tarun Jindal",
+    rating: 5,
+    quote:
+      "Their financial advice has been extremely practical and growth-focused. We now have a clearer roadmap for scaling with confidence.",
+  },
+  {
+    name: "Mrs. Krishn Lata Gupta",
+    rating: 5,
+    quote:
+      "Outstanding GST-related services—timely filings, proactive guidance, and strong support that saved us both time and cost.",
+  },
+  {
+    name: "Mr. Lakhmi Chand Gupta",
+    rating: 5,
+    quote:
+      "Their ITR services are smooth, accurate, and hassle-free. We feel confident every return is filed with absolute compliance.",
+  },
 ];
 
 function StarRow({ count = 5 }) {
