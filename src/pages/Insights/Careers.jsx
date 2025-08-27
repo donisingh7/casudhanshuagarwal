@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function Careers() {
-  const mail = " info.casudhanshu@gmail.com"; 
+  const mail = "info.casudhanshu@gmail.com"; 
 
   return (
     <section className="bg-white">

@@ -5,7 +5,7 @@ export default function AboutBrief() {
         <div>
           <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">About the Firm</h2>
           <p className="mt-4 text-slate-600">
-            Sudhanshu Agrawal & Associates is a partner-led Chartered Accountancy firm based in Delhi
+            Sudhanshu Agarwal & Associates is a partner-led Chartered Accountancy firm based in Delhi
             with presence across India. We bring multi-industry experience in audit, taxation and advisory.
           </p>
           <ul className="mt-6 grid sm:grid-cols-2 gap-4 text-sm">
