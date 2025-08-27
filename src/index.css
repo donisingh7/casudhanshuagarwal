@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@theme {
+  --color-blue-50:  #f5f7fb;
+  --color-blue-100: #e9edf5;
+  --color-blue-200: #ced7e8;
+  --color-blue-300: #a8bad6;
+  --color-blue-400: #7f99c0;
+  --color-blue-500: #577aa9;
+  --color-blue-600: #2e4c7c;  
+  --color-blue-700: #223a61;  
+  --color-blue-800: #192b49;
+  --color-blue-900: #0f1d32;
+  --color-blue-950: #0a1626;
+}
+
+
+.container-xl { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+.glass { @apply bg-white/70 backdrop-blur-md shadow-lg border border-white/40; }
+.btn-primary { @apply inline-flex items-center justify-center rounded-xl px-5 py-3 font-medium bg-blue-600 text-white hover:bg-blue-700 transition; }
+.btn-outline  { @apply inline-flex items-center justify-center rounded-xl px-5 py-3 font-medium border border-blue-600 text-blue-700 hover:bg-blue-50 transition; }
+.section { @apply py-16 sm:py-20; }
+.h1 { @apply text-3xl sm:text-5xl font-bold tracking-tight; }
+.h2 { @apply text-2xl sm:text-3xl font-semibold tracking-tight; }
+.muted { @apply text-slate-600; }
+.card { @apply rounded-2xl p-6 shadow-sm ring-1 ring-slate-200 bg-white; }
