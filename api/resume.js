@@ -1,4 +1,3 @@
-// api/resume.js
 import nodemailer from "nodemailer";
 import formidable from "formidable";
 import { readFile } from "fs/promises";
@@ -26,21 +25,13 @@ export default async function handler(req, res) {
 
   try {
     const { fields, files } = await parseForm(req);
-    const name = fields?.name?.toString() || "";
-    const email = fields?.email?.toString() || "";
-    const phone = fields?.phone?.toString() || "";
-    const role = fields?.role?.toString() || "";
-    const message = fields?.message?.toString() || "";
+    console.log("Files parsed:", files); // 🔍 check shape in Vercel logs
 
-    if (!name || !email) {
-      return res.status(400).json({ error: "Name & email required" });
-    }
-    const file = files?.resume;
+    const file = Array.isArray(files.resume) ? files.resume[0] : files.resume;
     if (!file) {
-      return res.status(400).json({ error: "Resume (PDF) required" });
+      return res.status(400).json({ error: "Resume file required" });
     }
 
-    // Read uploaded file to a buffer
     const fileBuffer = await readFile(file.filepath);
     const filename = file.originalFilename || "resume.pdf";
     const contentType = file.mimetype || "application/pdf";
@@ -48,30 +39,25 @@ export default async function handler(req, res) {
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.gmail.com",
       port: Number(process.env.SMTP_PORT || 465),
-      secure: String(process.env.SMTP_SECURE || "true") === "true",
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
 
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
       from: process.env.FROM_EMAIL || process.env.EMAIL_USER,
       to: process.env.TO_EMAIL || process.env.EMAIL_USER,
-      replyTo: email,
+      replyTo: fields.email?.toString() || "",
       subject: "New Resume Submission",
-      text:
-        `Name: ${name}\nEmail: ${email}\nPhone: ${phone || "N/A"}\n` +
-        `Role: ${role || "N/A"}\n\nMessage:\n${message || ""}`,
-      attachments: [
-        { filename, content: fileBuffer, contentType },
-      ],
+      text: `Name: ${fields.name}\nEmail: ${fields.email}\nPhone: ${fields.phone}\nRole: ${fields.role}\n\n${fields.message}`,
+      attachments: [{ filename, content: fileBuffer, contentType }],
     });
 
-    console.log("RESUME messageId:", info.messageId, "response:", info.response);
-    return res.status(200).json({ success: true, msg: "Resume submitted!" });
+    return res.status(200).json({ ok: true, message: "Resume submitted!" });
   } catch (err) {
     console.error("RESUME error:", err);
-    return res.status(500).json({ error: err?.message || "Failed to submit resume" });
+    return res.status(500).json({ error: "Resume submit failed" });
   }
 }
