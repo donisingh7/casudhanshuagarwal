@@ -9,11 +9,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// --- Middleware
 app.use(cors()); // if needed, restrict: cors({ origin: ["http://localhost:5173", "https://your-frontend.com"] })
 app.use(express.json());
 
-// Multer (in‑memory) for file uploads
 const upload = multer({ storage: multer.memoryStorage() });
 
 // --- Gmail SMTP transporter (recommended explicit host config)
